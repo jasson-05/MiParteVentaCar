@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,10 +13,12 @@ namespace MiParteVentaCar.AppWebMVC.Controllers
     public class AutosController : Controller
     {
         private readonly VentacarProyectContext _context;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public AutosController(VentacarProyectContext context)
+        public AutosController(VentacarProyectContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Autos
@@ -46,6 +49,27 @@ namespace MiParteVentaCar.AppWebMVC.Controllers
             return View(auto);
         }
 
+        public async Task<string> GuardarImage(IFormFile? file, string url = "")
+        {
+            string urlImage = url;
+            if (file != null && file.Length > 0)
+            {
+                // Construir la ruta del archivo
+                string nameFile = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                string path = Path.Combine(_webHostEnvironment.WebRootPath, "imagenes", nameFile);
+
+                // Guardar la imagen en wwwroot
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+
+                // Guardar la ruta en la base de datos
+                urlImage = "/imagenes/" + nameFile;
+            }
+            return urlImage;
+        }
+
         // GET: Autos/Create
         public IActionResult Create()
         {
@@ -60,10 +84,11 @@ namespace MiParteVentaCar.AppWebMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,IdVendedor,IdDepartamento,IdMarca,AnnoFabricacion,Modelo,DescripcionA,Kilometraje,Estado,Precio,Urlimagen,Urt,FechaRp,Actividad,Comentario")] Auto auto)
+        public async Task<IActionResult> Create([Bind("Id,IdVendedor,IdDepartamento,IdMarca,AnnoFabricacion,Modelo,DescripcionA,Kilometraje,Estado,Precio,Urlimagen,Urt,FechaRp,Actividad,Comentario")] Auto auto, IFormFile? file = null)
         {
             if (ModelState.IsValid)
             {
+                auto.Urlimagen = await GuardarImage(file);
                 _context.Add(auto);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -98,7 +123,7 @@ namespace MiParteVentaCar.AppWebMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,IdVendedor,IdDepartamento,IdMarca,AnnoFabricacion,Modelo,DescripcionA,Kilometraje,Estado,Precio,Urlimagen,Urt,FechaRp,Actividad,Comentario")] Auto auto)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,IdVendedor,IdDepartamento,IdMarca,AnnoFabricacion,Modelo,DescripcionA,Kilometraje,Estado,Precio,Urlimagen,Urt,FechaRp,Actividad,Comentario")] Auto auto,IFormFile? file = null)
         {
             if (id != auto.Id)
             {
@@ -109,6 +134,7 @@ namespace MiParteVentaCar.AppWebMVC.Controllers
             {
                 try
                 {
+                    auto.Urlimagen = await GuardarImage(file);
                     _context.Update(auto);
                     await _context.SaveChangesAsync();
                 }

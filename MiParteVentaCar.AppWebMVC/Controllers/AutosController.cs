@@ -27,6 +27,11 @@ namespace MiParteVentaCar.AppWebMVC.Controllers
             var ventacarProyectContext = _context.Autos.Include(a => a.IdDepartamentoNavigation).Include(a => a.IdMarcaNavigation).Include(a => a.IdVendedorNavigation);
             return View(await ventacarProyectContext.ToListAsync());
         }
+        public async Task<IActionResult> Publicaciones()
+        {
+            var ventacarProyectContext = _context.Autos.Include(a => a.IdDepartamentoNavigation).Include(a => a.IdMarcaNavigation).Include(a => a.IdVendedorNavigation);
+            return View(await ventacarProyectContext.ToListAsync());
+        }
 
         // GET: Autos/Details/5
         public async Task<IActionResult> Details(int? id)

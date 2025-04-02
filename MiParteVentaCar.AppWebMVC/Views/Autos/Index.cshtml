@@ -78,9 +78,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Precio)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Urlimagen)
-            </td>
+                <td>
+                    @if (!string.IsNullOrWhiteSpace(item.Urlimagen))
+                    {
+                        <img src="@item.Urlimagen" style="width:75px" />
+                    }
+                </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Urt)
             </td>

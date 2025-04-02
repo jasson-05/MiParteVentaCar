@@ -1,0 +1,41 @@
+﻿
+@model IEnumerable<MiParteVentaCar.AppWebMVC.Models.Auto>
+
+@{
+    ViewData["Title"] = "Publicaciones";
+}
+
+<h1>Ofertas de auto</h1>
+<h1>Ofertas de auto</h1>
+
+<div class="catalog-container">
+    @foreach (var item in Model)
+    {
+        <div class="catalog-item">
+            <div class="catalog-image">
+                @if (!string.IsNullOrWhiteSpace(item.Urlimagen))
+                {
+                    <img src="@item.Urlimagen" alt="@item.Modelo" />
+                }
+                else
+                {
+                    <img src="~/images/no-image.png" alt="Sin imagen" />
+                }
+            </div>
+            <div class="catalog-details">
+                <h3>@item.Modelo (@item.AnnoFabricacion)</h3>
+                <p><strong>Descripción:</strong> @item.DescripcionA</p>
+                <p><strong>Kilometraje:</strong> @item.Kilometraje</p>
+                <p><strong>Estado:</strong> @item.Estado</p>
+                <p><strong>Precio:</strong> @item.Precio</p>
+                <p><strong>Departamento:</strong> @item.IdDepartamentoNavigation.Id</p>
+                <p><strong>Marca:</strong> @item.IdMarcaNavigation.Id</p>
+                <p><strong>Vendedor:</strong> @item.IdVendedorNavigation.Id</p>
+                <p><strong>Comentario:</strong> @item.Comentario</p>
+                <p><strong>Fecha de registro:</strong> @item.Urt</p>
+                <p><strong>Fecha de reparación:</strong> @item.FechaRp</p>
+                <p><strong>Actividad:</strong> @item.Actividad</p>
+            </div>
+        </div>
+    }
+</div>

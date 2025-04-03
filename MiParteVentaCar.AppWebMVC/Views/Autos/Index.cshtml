@@ -3,114 +3,45 @@
 @{
     ViewData["Title"] = "Index";
 }
+<a asp-action="Create">Nueva</a>
+<h1>Ofertas de auto</h1>
 
-<h1>Index</h1>
+<div class="catalog-container">
+    @foreach (var item in Model)
+    {
+        <div class="catalog-item">
+            <div class="catalog-image">
+                @if (!string.IsNullOrWhiteSpace(item.Urlimagen))
+                {
+                    <img src="@item.Urlimagen" alt="@item.Modelo" />
+                }
+                else
+                {
+                    <img src="~/images/no-image.png" alt="Sin imagen" />
+                }
+            </div>
+            <div class="catalog-details">
+                <h3>@item.Modelo (@item.AnnoFabricacion)</h3>
+                <p><strong>Descripción:</strong> @item.DescripcionA</p>
+                @*<p><strong>Kilometraje:</strong> @item.Kilometraje</p>
+                <p><strong>Estado:</strong> @item.Estado</p>
+                <p><strong>Precio:</strong> @item.Precio</p>
+                <p><strong>Departamento:</strong> @item.IdDepartamentoNavigation.Id</p>
+                <p><strong>Marca:</strong> @item.IdMarcaNavigation.Id</p>
+                <p><strong>Vendedor:</strong> @item.IdVendedorNavigation.Id</p>
+                <p><strong>Comentario:</strong> @item.Comentario</p>
+                <p><strong>Fecha de registro:</strong> @item.Urt</p>
+                <p><strong>Fecha de reparación:</strong> @item.FechaRp</p>
+                <p><strong>Actividad:</strong> @item.Actividad</p>*@
+                
+                <a asp-action="Details" class="btn btn-primary" asp-route-id="@item.Id">Ver mas...</a>
+                
+            </div>
+        </div>
+    }
+</div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.AnnoFabricacion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Modelo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DescripcionA)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Kilometraje)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Estado)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Precio)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Urlimagen)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Urt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaRp)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Actividad)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Comentario)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdDepartamentoNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdMarcaNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdVendedorNavigation)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.AnnoFabricacion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Modelo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DescripcionA)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Kilometraje)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Estado)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Precio)
-            </td>
-                <td>
-                    @if (!string.IsNullOrWhiteSpace(item.Urlimagen))
-                    {
-                        <img src="@item.Urlimagen" style="width:75px" />
-                    }
-                </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Urt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaRp)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Actividad)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Comentario)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdDepartamentoNavigation.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdMarcaNavigation.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdVendedorNavigation.Id)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+               @*  <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                *@

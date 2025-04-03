@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace MiParteVentaCar.AppWebMVC.Models;
 
@@ -7,6 +8,7 @@ public partial class Vendedore
 {
     public int Id { get; set; }
 
+    [Display(Name = "Vendedor")]
     public string Nombre { get; set; } = null!;
 
     public string Apellido { get; set; } = null!;

@@ -78,9 +78,9 @@ namespace MiParteVentaCar.AppWebMVC.Controllers
         // GET: Autos/Create
         public IActionResult Create()
         {
-            ViewData["IdDepartamento"] = new SelectList(_context.Departamentos, "Id", "Id");
-            ViewData["IdMarca"] = new SelectList(_context.Marcas, "Id", "Id");
-            ViewData["IdVendedor"] = new SelectList(_context.Vendedores, "Id", "Id");
+            ViewData["IdDepartamento"] = new SelectList(_context.Departamentos, "Id", "Departamento1");
+            ViewData["IdMarca"] = new SelectList(_context.Marcas, "Id", "Marca1");
+            ViewData["IdVendedor"] = new SelectList(_context.Vendedores, "Id", "Nombre");
             return View();
         }
 

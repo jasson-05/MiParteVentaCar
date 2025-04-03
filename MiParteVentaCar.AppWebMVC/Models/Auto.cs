@@ -8,13 +8,16 @@ public partial class Auto
 {
     public int Id { get; set; }
 
+    [Display(Name = "Vendedor")]
     public int IdVendedor { get; set; }
 
+    [Display(Name = "Departamento")]
     public int IdDepartamento { get; set; }
 
+    [Display(Name = "Marca")]
     public int IdMarca { get; set; }
 
-
+    [Display(Name = "Año de fabricacion")]
     public string? AnnoFabricacion { get; set; }
 
     [Required(ErrorMessage = "El modelo es obligatorio.")]
@@ -42,6 +45,7 @@ public partial class Auto
     [Display(Name = "Utima revición tecnológica")]
     public DateTime Urt { get; set; }
 
+    [Display(Name = "Disponible hasta")]
     public DateTime? FechaRp { get; set; }
 
     public byte? Actividad { get; set; }

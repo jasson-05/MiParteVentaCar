@@ -18,7 +18,15 @@
             <p>No hay imagen disponible.</p>
         }
     </div>
-
+    @if (Model.FechaRp.HasValue && Model.FechaRp <= DateTime.Now)
+    {
+        <p style="color: red;">Esta publicación ha expirado y será eliminada automáticamente.</p>
+        <a asp-action="Index" class="btn btn-primary">Regresar</a>
+    }
+    else
+    {
+        <a asp-action="Index" class="btn btn-primary">Regresar</a>
+    }
     <div class="details-container">
         <div class="detail-row">
             <div class="detail-item"><strong>@Html.DisplayNameFor(model => model.AnnoFabricacion):</strong> @Model.AnnoFabricacion</div>
@@ -45,7 +53,18 @@
             <div class="detail-item"><strong>@Html.DisplayNameFor(model => model.IdMarcaNavigation.Marca1):</strong> @Model.IdMarcaNavigation.Marca1</div>
         </div>
         <div class="detail-row">
+            <a>Datos del vendedor</a>
+        </div>
+
+        <div class="detail-row">
             <div class="detail-item"><strong>@Html.DisplayNameFor(model => model.IdVendedorNavigation.Nombre):</strong> @Model.IdVendedorNavigation.Nombre</div>
+            <div class="detail-item"><strong>@Html.DisplayNameFor(model => model.IdVendedorNavigation.Apellido):</strong> @Model.IdVendedorNavigation.Apellido</div>
+
+        </div>
+        <div class="detail-row">
+            
+            <div class="detail-item"><strong>@Html.DisplayNameFor(model => model.IdVendedorNavigation.Direccion):</strong> @Model.IdVendedorNavigation.Direccion</div>
+            <div class="detail-item"><strong>@Html.DisplayNameFor(model => model.IdVendedorNavigation.Telefono):</strong> @Model.IdVendedorNavigation.Telefono</div>
         </div>
     </div>
 

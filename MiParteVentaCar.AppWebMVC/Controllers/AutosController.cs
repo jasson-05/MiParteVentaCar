@@ -29,7 +29,7 @@ namespace MiParteVentaCar.AppWebMVC.Controllers
         }
         public async Task<IActionResult> Publicaciones()
         {
-            var ventacarProyectContext = _context.Autos.Include(a => a.IdDepartamentoNavigation).Include(a => a.IdMarcaNavigation).Include(a => a.IdVendedorNavigation);
+            var ventacarProyectContext = _context.Autos.Include(a => a.IdDepartamentoNavigation).Include(a => a.IdMarcaNavigation).Include(a => a.IdVendedorNavigation).Where(a => a.IdVendedor == 1);
             return View(await ventacarProyectContext.ToListAsync());
         }
 
@@ -45,6 +45,7 @@ namespace MiParteVentaCar.AppWebMVC.Controllers
                 .Include(a => a.IdDepartamentoNavigation)
                 .Include(a => a.IdMarcaNavigation)
                 .Include(a => a.IdVendedorNavigation)
+                
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (auto == null)
             {
@@ -54,6 +55,29 @@ namespace MiParteVentaCar.AppWebMVC.Controllers
             return View(auto);
         }
 
+
+       /* public async Task<IActionResult> Publicaciones(int? idVendedor)
+        {
+            if (idVendedor == null)
+            {
+                return NotFound();
+            }
+
+            var autos = await _context.Autos
+                .Include(a => a.IdDepartamentoNavigation)
+                .Include(a => a.IdMarcaNavigation)
+                .Include(a => a.IdVendedorNavigation)
+                .Where(a => a.IdVendedor == idVendedor)
+                .ToListAsync();
+
+            if (autos == null || autos.Count == 0)
+            {
+                return NotFound();
+            }
+
+            return View(autos);
+        }
+       */
         public async Task<string> GuardarImage(IFormFile? file, string url = "")
         {
             string urlImage = url;

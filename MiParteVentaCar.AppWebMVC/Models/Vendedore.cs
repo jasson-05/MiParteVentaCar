@@ -8,7 +8,7 @@ public partial class Vendedore
 {
     public int Id { get; set; }
 
-    [Display(Name = "Vendedor")]
+    [Display(Name = "Nombre")]
     public string Nombre { get; set; } = null!;
 
     public string Apellido { get; set; } = null!;

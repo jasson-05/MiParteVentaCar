@@ -1,44 +1,76 @@
-﻿
-@model IEnumerable<MiParteVentaCar.AppWebMVC.Models.Auto>
+﻿@model List<MiParteVentaCar.AppWebMVC.Models.Auto>
 
 @{
     ViewData["Title"] = "Publicaciones";
 }
 
-<h1>Ofertas de auto</h1>
+<h1>Mis Publicaciones</h1>
 
-<div class="row">
+@if (Model != null && Model.Count > 0)
+{
+    <div class="catalog-container">
+        @foreach (var item in Model)
+        {
+            <div class="catalog-item">
+                <div class="catalog-image">
+                    @if (!string.IsNullOrWhiteSpace(item.Urlimagen))
+                    {
+                        <img src="@item.Urlimagen" alt="@item.Modelo" />
+                    }
+                    else
+                    {
+                        <img src="~/images/no-image.png" alt="Sin imagen" />
+                    }
+                </div>
+                <div class="catalog-details">
+                    <h3>@item.Modelo (@item.AnnoFabricacion)</h3>
+                    <p><strong>Descripción:</strong> @item.DescripcionA</p>
+                    @*<p><strong>Kilometraje:</strong> @item.Kilometraje</p>
+                    <p><strong>Estado:</strong> @item.Estado</p>
+                    <p><strong>Precio:</strong> @item.Precio</p>
+                    <p><strong>Departamento:</strong> @item.IdDepartamentoNavigation.Id</p>
+                    <p><strong>Marca:</strong> @item.IdMarcaNavigation.Id</p>
+                    <p><strong>Vendedor:</strong> @item.IdVendedorNavigation.Id</p>
+                    <p><strong>Comentario:</strong> @item.Comentario</p>
+                    <p><strong>Fecha de registro:</strong> @item.Urt</p>
+                    <p><strong>Fecha de reparación:</strong> @item.FechaRp</p>
+                    <p><strong>Actividad:</strong> @item.Actividad</p>*@
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>Este vendedor no tiene publicaciones.</p>
+}
 
-<div class="catalog-container">
-    @foreach (var item in Model)
-    {
-        <div class="catalog-item">
-            <div class="catalog-image">
-                @if (!string.IsNullOrWhiteSpace(item.Urlimagen))
-                {
-                    <img src="@item.Urlimagen" alt="@item.Modelo" />
-                }
-                else
-                {
-                    <img src="~/images/no-image.png" alt="Sin imagen" />
-                }
-            </div>
-            <div class="catalog-details">
-                <h3>@item.Modelo (@item.AnnoFabricacion)</h3>
-                <p><strong>Descripción:</strong> @item.DescripcionA</p>
-                <p><strong>Kilometraje:</strong> @item.Kilometraje</p>
-                <p><strong>Estado:</strong> @item.Estado</p>
-                <p><strong>Precio:</strong> @item.Precio</p>
-                <p><strong>Departamento:</strong> @item.IdDepartamentoNavigation.Id</p>
-                <p><strong>Marca:</strong> @item.IdMarcaNavigation.Id</p>
-                <p><strong>Vendedor:</strong> @item.IdVendedorNavigation.Id</p>
-                <p><strong>Comentario:</strong> @item.Comentario</p>
-                <p><strong>Fecha de registro:</strong> @item.Urt</p>
-                <p><strong>Fecha de reparación:</strong> @item.FechaRp</p>
-                <p><strong>Actividad:</strong> @item.Actividad</p>
-                <a asp-action="Publicaciones">Ver mas</a>
-            </div>
-        </div>
+<style>
+    .catalog-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
     }
-</div>
-</div>
+
+    .catalog-item {
+        width: 300px;
+        border: 1px solid #ddd;
+        margin: 10px;
+        padding: 10px;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .catalog-image {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+        .catalog-image img {
+            max-width: 100%;
+            height: auto;
+        }
+
+    .catalog-details {
+        text-align: left;
+    }
+</style>

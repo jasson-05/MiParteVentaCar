@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
@@ -22,14 +23,25 @@ namespace MiParteVentaCar.AppWebMVC.Controllers
         }
 
         // GET: Autos
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(Auto auto, int topRegistro = 10)
         {
-            var ventacarProyectContext = _context.Autos.Include(a => a.IdDepartamentoNavigation).Include(a => a.IdMarcaNavigation).Include(a => a.IdVendedorNavigation);
-            return View(await ventacarProyectContext.ToListAsync());
+            var query = _context.Autos.AsQueryable();
+            if (auto.IdDepartamento > 0)
+                query = query.Where(s => s.IdDepartamento == auto.IdDepartamento);
+            if (topRegistro > 0)
+                query = query.Take(topRegistro);
+            query = query
+                .Include(p => p.IdDepartamentoNavigation);
+
+            var departamentos = _context.Departamentos.ToList();
+            departamentos.Add(new Departamento { Departamento1 = "SELECCIONAR", Id = 0 });
+            ViewData["IdDepartamento"] = new SelectList(departamentos, "Id", "Departamento1", 0);
+
+            return View(await query.ToListAsync());
         }
         public async Task<IActionResult> Publicaciones()
         {
-            var ventacarProyectContext = _context.Autos.Include(a => a.IdDepartamentoNavigation).Include(a => a.IdMarcaNavigation).Include(a => a.IdVendedorNavigation).Where(a => a.IdVendedor == 1);
+            var ventacarProyectContext = _context.Autos.Include(a => a.IdDepartamentoNavigation).Include(a => a.IdMarcaNavigation).Include(a => a.IdVendedorNavigation);
             return View(await ventacarProyectContext.ToListAsync());
         }
 
@@ -143,9 +155,9 @@ namespace MiParteVentaCar.AppWebMVC.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdDepartamento"] = new SelectList(_context.Departamentos, "Id", "Id", auto.IdDepartamento);
-            ViewData["IdMarca"] = new SelectList(_context.Marcas, "Id", "Id", auto.IdMarca);
-            ViewData["IdVendedor"] = new SelectList(_context.Vendedores, "Id", "Id", auto.IdVendedor);
+            ViewData["IdDepartamento"] = new SelectList(_context.Departamentos, "Id", "Departamento1", auto.IdDepartamento);
+            ViewData["IdMarca"] = new SelectList(_context.Marcas, "Id", "Marca1", auto.IdMarca);
+            ViewData["IdVendedor"] = new SelectList(_context.Vendedores, "Id", "Nombre", auto.IdVendedor);
             return View(auto);
         }
 
@@ -162,9 +174,9 @@ namespace MiParteVentaCar.AppWebMVC.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdDepartamento"] = new SelectList(_context.Departamentos, "Id", "Id", auto.IdDepartamento);
-            ViewData["IdMarca"] = new SelectList(_context.Marcas, "Id", "Id", auto.IdMarca);
-            ViewData["IdVendedor"] = new SelectList(_context.Vendedores, "Id", "Id", auto.IdVendedor);
+            ViewData["IdDepartamento"] = new SelectList(_context.Departamentos, "Id", "Departamento1", auto.IdDepartamento);
+            ViewData["IdMarca"] = new SelectList(_context.Marcas, "Id", "Marca1", auto.IdMarca);
+            ViewData["IdVendedor"] = new SelectList(_context.Vendedores, "Id", "Nombre", auto.IdVendedor);
             return View(auto);
         }
 

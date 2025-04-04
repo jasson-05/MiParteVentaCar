@@ -4,73 +4,158 @@
     ViewData["Title"] = "Publicaciones";
 }
 
-<h1>Mis Publicaciones</h1>
+<h1 style="text-align: center; margin-bottom: 20px; color: #333;">Mis publicaciones</h1>
 
-@if (Model != null && Model.Count > 0)
-{
-    <div class="catalog-container">
-        @foreach (var item in Model)
-        {
-            <div class="catalog-item">
-                <div class="catalog-image">
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    @foreach (var item in Model)
+    {
+        <div class="col">
+            <div class="card h-100" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                <div style="text-align: center; padding: 10px;">
                     @if (!string.IsNullOrWhiteSpace(item.Urlimagen))
                     {
-                        <img src="@item.Urlimagen" alt="@item.Modelo" />
+                        <img src="@item.Urlimagen" class="card-img-top" alt="@item.Modelo" style="width: 200px; height: 150px; object-fit: contain;">
                     }
                     else
                     {
-                        <img src="~/images/no-image.png" alt="Sin imagen" />
+                        <p class="card-text">No hay imagen disponible.</p>
                     }
                 </div>
-                <div class="catalog-details">
-                    <h3>@item.Modelo (@item.AnnoFabricacion)</h3>
-                    <p><strong>Descripción:</strong> @item.DescripcionA</p>
-                    @*<p><strong>Kilometraje:</strong> @item.Kilometraje</p>
-                    <p><strong>Estado:</strong> @item.Estado</p>
-                    <p><strong>Precio:</strong> @item.Precio</p>
-                    <p><strong>Departamento:</strong> @item.IdDepartamentoNavigation.Id</p>
-                    <p><strong>Marca:</strong> @item.IdMarcaNavigation.Id</p>
-                    <p><strong>Vendedor:</strong> @item.IdVendedorNavigation.Id</p>
-                    <p><strong>Comentario:</strong> @item.Comentario</p>
-                    <p><strong>Fecha de registro:</strong> @item.Urt</p>
-                    <p><strong>Fecha de reparación:</strong> @item.FechaRp</p>
-                    <p><strong>Actividad:</strong> @item.Actividad</p>*@
+                <div class="card-body">
+                    <h5 class="card-title" style="text-align: center;">@Html.DisplayFor(modelItem => item.Modelo) (@Html.DisplayFor(modelItem => item.AnnoFabricacion))</h5>
+                    <ul class="list-unstyled">
+                        <li><strong>Marca:</strong> @Html.DisplayFor(modelItem => item.IdMarcaNavigation.Marca1)</li>
+                        <li><strong>Precio:</strong> @Html.DisplayFor(modelItem => item.Precio)</li>
+                        <li><strong>Estado:</strong> @Html.DisplayFor(modelItem => item.Estado)</li>
+                        <li style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="@item.DescripcionA">
+                            <strong>Descripción:</strong> @item.DescripcionA
+                        </li>
+                    </ul>
+                    <div class="text-center">
+                        <a asp-action="EditarPubli" asp-route-id="@item.Id" class="btn btn-info btn-sm">Ver más...</a>
+                    </div>
+                </div>
+                <div class="card-footer text-muted text-center">
+                    Disponible hasta @Html.DisplayFor(modelItem => item.FechaRp)
                 </div>
             </div>
-        }
-    </div>
-}
-else
-{
-    <p>Este vendedor no tiene publicaciones.</p>
-}
+        </div>
+    }
+</div>
 
 <style>
+    .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+        color: white;
+    }
+
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+
+    .card {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-title {
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .card-text, .list-unstyled li {
+        font-size: 0.9rem;
+        color: #555;
+        margin-bottom: 5px;
+    }
+
+    .btn-info {
+        background-color: #17a2b8;
+        border-color: #17a2b8;
+        color: white;
+    }
+
+        .btn-info:hover {
+            background-color: #138496;
+            border-color: #138496;
+        }
+
     .catalog-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
     }
 
     .catalog-item {
-        width: 300px;
         border: 1px solid #ddd;
-        margin: 10px;
-        padding: 10px;
-        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
     }
 
     .catalog-image {
         text-align: center;
-        margin-bottom: 10px;
+        padding: 10px;
+        height: 150px; /* Ajusta la altura deseada */
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
         .catalog-image img {
             max-width: 100%;
-            height: auto;
+            max-height: 100%;
+            object-fit: contain;
         }
 
     .catalog-details {
-        text-align: left;
+        padding: 15px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
+
+        .catalog-details h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            text-align: center;
+            color: #333;
+        }
+
+        .catalog-details p {
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 5px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .catalog-details strong {
+            font-weight: bold;
+        }
+
+        .catalog-details .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+            .catalog-details .btn-primary:hover {
+                background-color: #0056b3;
+                border-color: #0056b3;
+            }
 </style>

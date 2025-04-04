@@ -91,7 +91,11 @@
 
             <div class="form-group" style="margin-bottom: 15px;">
                 <label asp-for="Actividad" class="control-label">Actividad</label>
-                <input asp-for="Actividad" class="form-control" />
+                <select asp-for="Actividad" class="form-control">
+               
+                    <option value="1">Activo</option>
+                    <option value="2">Inactivo</option>
+                </select>
                 <span asp-validation-for="Actividad" class="text-danger"></span>
             </div>
 

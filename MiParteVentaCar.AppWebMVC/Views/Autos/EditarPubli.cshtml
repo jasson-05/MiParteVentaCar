@@ -1,7 +1,7 @@
 ﻿@model MiParteVentaCar.AppWebMVC.Models.Auto
 
 @{
-    ViewData["Title"] = "Detalles del Auto";
+    ViewData["Title"] = "Editar detalles del Auto";
 }
 
 <h1 class="text-center mb-4" style="color: #333;">Detalles del Auto</h1>
@@ -57,7 +57,7 @@
                             <strong style="color: #555;">Fecha de Reparación:</strong>
                             <span class="text-muted">@Model.FechaRp?.ToShortDateString()</span>
                         </li>
-                      @*  <li class="list-group-item d-flex justify-content-between align-items-center">
+                        @*  <li class="list-group-item d-flex justify-content-between align-items-center">
                             <strong style="color: #555;">Actividad:</strong>
                             <span class="text-muted">
                                 @if (Model.Actividad == 1)
@@ -86,6 +86,7 @@
                     </ul>
                     <div class="mt-4">
                         <a asp-action="Index" class="btn btn-outline-secondary">Regresar a la Lista</a>
+                        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-secondary">Editar</a>
                     </div>
                 </div>
             </div>

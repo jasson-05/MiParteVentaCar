@@ -55,29 +55,50 @@ namespace MiParteVentaCar.AppWebMVC.Controllers
             return View(auto);
         }
 
-
-       /* public async Task<IActionResult> Publicaciones(int? idVendedor)
+        public async Task<IActionResult> EditarPubli(int? id)
         {
-            if (idVendedor == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var autos = await _context.Autos
+            var auto = await _context.Autos
                 .Include(a => a.IdDepartamentoNavigation)
                 .Include(a => a.IdMarcaNavigation)
                 .Include(a => a.IdVendedorNavigation)
-                .Where(a => a.IdVendedor == idVendedor)
-                .ToListAsync();
 
-            if (autos == null || autos.Count == 0)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (auto == null)
             {
                 return NotFound();
             }
 
-            return View(autos);
+            return View(auto);
         }
-       */
+
+
+        /* public async Task<IActionResult> Publicaciones(int? idVendedor)
+         {
+             if (idVendedor == null)
+             {
+                 return NotFound();
+             }
+
+             var autos = await _context.Autos
+                 .Include(a => a.IdDepartamentoNavigation)
+                 .Include(a => a.IdMarcaNavigation)
+                 .Include(a => a.IdVendedorNavigation)
+                 .Where(a => a.IdVendedor == idVendedor)
+                 .ToListAsync();
+
+             if (autos == null || autos.Count == 0)
+             {
+                 return NotFound();
+             }
+
+             return View(autos);
+         }
+        */
         public async Task<string> GuardarImage(IFormFile? file, string url = "")
         {
             string urlImage = url;

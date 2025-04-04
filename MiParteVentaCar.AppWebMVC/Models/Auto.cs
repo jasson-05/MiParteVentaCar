@@ -45,8 +45,9 @@ public partial class Auto
     [Display(Name = "Utima revición tecnológica")]
     public DateTime Urt { get; set; }
 
+
     [Display(Name = "Disponible hasta")]
-    public DateTime? FechaRp { get; set; }
+    public DateTime? FechaRp { get; set; } 
 
     public byte? Actividad { get; set; }
 
